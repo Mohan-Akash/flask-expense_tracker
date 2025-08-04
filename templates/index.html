@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Tracker Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 18px;
+            background-color: #f4f4f4;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode {
+            background-color: #1e1e1e;
+            color: #eee;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            padding: 2rem;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        #theme-toggle {
+            padding: 0.6rem 1rem;
+            font-size: 1rem;
+            background-color: transparent;
+            border: 2px solid purple;
+            color: purple;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #theme-toggle:hover {
+            background-color: purple;
+            color: white;
+        }
+
+        .navbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
+            background-color: #e0e0e0;
+            color: #222;
+            transition: background-color 0.2s;
+        }
+
+        .navbar a:hover {
+            background-color: #ccc;
+        }
+
+        .dark-mode .navbar a {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .navbar a:hover {
+            background-color: #555;
+        }
+
+        main {
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .dark-mode main {
+            background-color: #2c2c2c;
+            box-shadow: 0 5px 15px rgba(255,255,255,0.05);
+        }
+
+        .summary {
+            margin-top: 2rem;
+            padding: 1rem;
+            font-size: 1.4rem;
+            font-weight: 600;
+            background: #eaf2ff;
+            border-left: 6px solid #5b5bff;
+            border-radius: 6px;
+        }
+
+        .dark-mode .summary {
+            background: #1c2230;
+            border-left: 6px solid #869eff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💰 Expense Tracker</h1>
+            <button id="theme-toggle">🌙 Toggle Theme</button>
+        </header>
+
+        <nav class="navbar">
+            <a href="/add">➕ Add Expense</a>
+            <a href="/view">📋 View Expenses</a>
+            <a href="/filter">🔍 Filter</a>
+            <a href="/totals">📊 Totals</a>
+        </nav>
+
+        <main>
+            <p>Welcome! Use the links above to manage your expenses efficiently.</p>
+
+            <div class="summary">
+                Total Amount Spent: ₹ {{ total_spent }}
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const toggleBtn = document.getElementById('theme-toggle');
+        toggleBtn.onclick = () => {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem("theme", document.body.classList.contains('dark-mode') ? "dark" : "light");
+        };
+
+        window.onload = () => {
+            if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add('dark-mode');
+            }
+        };
+    </script>
+</body>
+</html>

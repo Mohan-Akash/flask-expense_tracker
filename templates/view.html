@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Expenses</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background: #f4f4f4;
+            color: #333;
+        }
+        h1 {
+            color: #444;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #2c3e50;
+            color: white;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin: 10px 5px 0 0;
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+        }
+        .btn:hover {
+            background-color: #2980b9;
+        }
+        .btn.danger {
+            background-color: #e74c3c;
+        }
+        .btn.danger:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>📋 {{ 'Category Totals' if total_view else 'All Expenses' }}</h1>
+
+    {% if total_view %}
+        {% if expenses %}
+        <table>
+            <tr>
+                <th>Category</th>
+                <th>Total Amount</th>
+            </tr>
+            {% for row in expenses %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>₹{{ row[1] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>📭 No data found for totals.</p>
+        {% endif %}
+    {% else %}
+        {% if expenses %}
+        <table>
+            <tr>
+                <th>#</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Note</th>
+                <th>Action</th>
+            </tr>
+            {% for row in expenses %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ row[0] }}</td>
+                <td>₹{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>
+                    <a class="btn danger" href="/remove/{{ loop.index0 }}" onclick="return confirm('Are you sure to delete this?');">🗑️ Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>📭 No expenses found.</p>
+        {% endif %}
+    {% endif %}
+
+    <div style="margin-top: 20px;">
+        <a href="/" class="btn">🏠 Home</a>
+        <a href="/add" class="btn">➕ Add Expense</a>
+        <a href="/filter" class="btn">🔍 Filter</a>
+        <a href="/totals" class="btn">📊 Totals</a>
+    </div>
+
+</body>
+</html>
